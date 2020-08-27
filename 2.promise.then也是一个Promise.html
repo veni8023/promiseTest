@@ -1,0 +1,40 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-27 14:50:07
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-27 14:57:31
+ * @Description: promise.then也是一个Promise
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let p1 = new Promise((resolve, reject) => {
+          //  resolve('成功');
+          reject('失败')
+        })
+        let p2 = p1.then((value) => {
+            console.log('value：',value);
+        }, reason => {
+            console.log('reason：',reason);
+        }).then(
+            value=>console.log('成功'),
+            reason=>console.log('失败')
+        )
+        console.log('p1',p1);
+        console.log('p2',p2);
+        setTimeout(()=>{
+            console.log('setTimeout p1',p1);
+            console.log('setTimeout p2',p2);
+        })
+    </script>
+</body>
+
+</html>

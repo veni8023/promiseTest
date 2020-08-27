@@ -1,0 +1,56 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-27 17:56:28
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-27 20:06:12
+ * @Description: 使用Promise封装ajax
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>ajax</div>
+    <script>
+        let account={}
+        function ajax(url,parmas,token) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open("post", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", token);
+                data = JSON.stringify(parmas);
+                xhr.send(data);
+               xhr.onload = function () {
+                    resolve(this.response)
+               }
+               xhr.onerror=function(){
+                    reject('失败')
+               }
+            })
+        }
+        window.onload=function(){
+            let config=`http://106.15.202.135:9001`
+            let parmas={"name":"admin","password":"123456"}
+            ajax(`${config}/api/user/login`,parmas).then(
+                value=>{
+                    console.log(value);
+                    let parmas=JSON.parse(value)
+                    return (
+                        ajax(`${config}/api/dict/getDictByType`,{"type":"项目职责"},parmas.token)
+                    )},
+                err=>console.log(err)
+            ).then(
+                value=>console.log(value),
+                err=>console.log(err)
+            )
+        }
+    </script>
+</body>
+
+</html>

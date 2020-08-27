@@ -1,0 +1,35 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-29 16:49:12
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-29 16:57:36
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+</head>
+<body>
+    <script>
+        let user={ name: 'admin', password: '123456' };
+        class User{
+            constructor(parmas){
+                this.parmas=parmas;
+                this.url=`http://106.15.202.135:9001/api/user/login`;
+            }
+            then(resolve,reject){    
+             let info= ajax(this.url,this.parmas);
+             resolve(info)
+            }
+        }
+        (async(parmas)=>{
+          let info=await  new User(parmas);
+          console.log(info)
+        })(user)
+    </script>
+</body>
+</html>

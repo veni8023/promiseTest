@@ -1,0 +1,60 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 16:45:32
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 17:08:36
+ * @Description: 11.Promise.resolve缓存
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            let config = `http://106.15.202.135:9001`
+            let parmas = { "name": "admin", "password": "123456" }
+            // ajax(`${config}/api/user/login`,parmas).then(
+            //     value=>console.log(value)
+            // )
+            // setTimeout(()=>{
+            //     ajax(`${config}/api/user/login`,parmas).then(
+            //     value=>console.log(value)
+            // )
+            // },2000)
+
+            function query(parmas) {
+                console.log('query',query.cache)
+                const cache=query.cache||(query.cache=new Map());
+                if(cache.has(parmas.name)){
+                    console.log('走缓存了');
+                    return Promise.resolve(cache.get(parmas.name));
+                }
+                return ajax(`${config}/api/user/login`, parmas).then(
+                    value => {
+                        cache.set(parmas.name,value);
+                        console.log('没走缓存');
+                        return value;
+                    }
+                )
+            }
+            query(parmas).then(value=>{
+                console.log(value)
+            });
+            setTimeout(() => {
+                query(parmas).then(value=>console.log(value));
+            }, 2000)
+            setTimeout(() => {
+                query(parmas).then(value=>console.log(value));
+            }, 4000)
+        }
+    </script>
+</body>
+
+</html>

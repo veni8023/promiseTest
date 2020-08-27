@@ -1,0 +1,30 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-29 14:14:31
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-29 14:25:29
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        async function test(){
+            let name=await new Promise(resolve=>{
+                resolve('veni')
+            });
+            let site=await new Promise(resolve=>{
+                resolve(`${name}+Tanner`)
+            })
+            console.log(site)
+        }
+        test();
+        console.log('132')
+    </script>
+</body>
+</html>

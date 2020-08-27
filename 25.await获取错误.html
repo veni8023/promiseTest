@@ -1,0 +1,35 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-29 17:38:19
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-29 17:46:42
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+</head>
+<body>
+    <script>
+        let url=`ttp://106.15.202.135:9001/api/user/login`;
+        let user={name:'admin',password:'123456'}
+
+        async function test(url,parmas){
+            try{
+                return await ajax(url,parmas)
+            }catch(error){
+                console.log(error)
+            }
+        }
+        test(url,user).then(info=>{
+            console.log(info);
+        },error=>{
+            console.log(error)
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 15:30:59
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 15:38:00
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function image(src){
+            return    new Promise((resove,reject)=>{
+            let image=new Image;
+            image.src=src;
+            document.body.appendChild(image);
+            image.onload=function(){
+                resove(image)
+            };
+            image.onerror=function(){
+                reject('失败')
+            }
+        })
+        }
+        window.onload=function(){
+            image('./public/logo.png').then(
+                image=>{
+                    console.log(image);
+                    image.style.border='6px solid red';
+                }
+            )
+        }
+    </script>
+</body>
+</html>

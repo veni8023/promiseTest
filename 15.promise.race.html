@@ -1,0 +1,44 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 17:51:30
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 18:14:56
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            let config = `http://106.15.202.135:9001`
+            let parmas = { "name": "admin", "password": "123456" }
+            getUsers = function (url, parmas, delay = 500) {
+                let promises = [
+                    ajax(url, parmas),
+                    new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            reject('请求超时')
+                        }, delay)
+                    })
+                ]
+                return Promise.race(promises)
+                // Promise.race 获取最先返回的数据
+            }
+            getUsers(`${config}/api/user/login`, parmas, 10).then(value => {
+                console.log(value)
+            }).catch(
+                err => { console.log(err) }
+            )
+        }
+    </script>
+</body>
+
+</html>

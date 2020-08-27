@@ -1,0 +1,35 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 17:34:55
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 17:43:11
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        new Promise((resolve,reject)=>{
+            resolve('veni')
+        }).then(
+            value=>{
+                console.log(value)
+                if(value!='Tanner'){
+                    // 在成功的里面接收参数，并再此次的Promise里面抛错
+                    //第一种方法
+                    // throw new Error('不是Tanner')
+                    // 第二种方法
+                    return Promise.reject('不是Tanner')
+                }
+            }
+        ).catch(err=>{
+            console.log(err)
+        })
+    </script>
+</body>
+</html>

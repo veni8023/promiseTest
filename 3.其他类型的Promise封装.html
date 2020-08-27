@@ -1,0 +1,51 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-27 17:37:01
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-27 17:44:06
+ * @Description: 其他类型的Promise封装
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        new Promise((resolve,reject)=>{
+            resolve('成功')
+        }).then(
+            value=>{
+                console.log(value);
+                // 第一种
+                // return {
+                //     then(resolve,reject){
+                //         reject('封装失败')
+                //     }
+                // }
+                // 第二种封装一个class
+                // class A{
+                //     then(resolve,reject){
+                //         reject('封装失败')
+                //     }
+                // }
+                // return new A;
+                // 第三种 静态类
+                return class{
+                    static  then(resolve,reject){
+                        resolve('封装成功')
+                    }
+                };
+            },
+            err=>{
+                console.log(err)
+            }
+        ).then(
+            value=>console.log('value',value),
+            err=>console.log('err',err)
+        )
+    </script>
+</body>
+</html>

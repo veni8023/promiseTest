@@ -1,0 +1,97 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 14:46:50
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 15:27:11
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #progress {
+            width: 200px;
+            height: 16px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        #loading {
+            width: 0px;
+            background-color: red;
+            height: 16px;
+            transition: all 0.2s;
+        }
+
+        #success {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='progress'>
+        <div id='loading'>loading</div>
+        <div id='success'>success</div>
+    </div>
+    <script>
+        function ajax(url, parmas, token) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest();
+                xhr.open("post", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Authorization", token);
+                data = JSON.stringify(parmas);
+                xhr.send(data);
+                xhr.onload = function () {
+                    timer = setTimeout(() => {
+                        resolve(this.response)
+
+                    }, 5000)
+                }
+                xhr.onerror = function () {
+                    reject('失败')
+                }
+
+            })
+        }
+        window.onload = function () {
+            let config = `http://106.15.202.135:9001`;
+            let parmas = { "name": "admin", "password": "123456" };
+            let timer;
+            let $loading = document.querySelector('#loading');
+            let $success = document.querySelector('#success');
+            let timer2 = setInterval(() => {
+                let loadingWidth = getComputedStyle($loading).width;
+                const width = parseInt(loadingWidth)
+                if (width <= 160) {
+                    $loading.style.width = width + 20 + 'px';
+                } else {
+                    clearInterval(timer2);
+                }
+            }, 10)
+
+            ajax(`${config}/api/user/login`, parmas).then(
+                value => console.log(value),
+            ).catch(
+                err => console.log(err)
+            ).finally(() => {
+                console.log('完成')
+                clearTimeout(timer);
+                clearTimeout(timer2);
+                $loading.style.width = '200px';
+                timer = setTimeout(() => {
+                    $loading.style.display = 'none';
+                    $success.style.display = 'block';
+                }, 500);
+            })
+        }
+    </script>
+</body>
+
+</html>

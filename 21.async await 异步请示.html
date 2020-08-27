@@ -1,0 +1,30 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-29 14:30:51
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-29 14:42:14
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+</head>
+<body>
+    <script>
+        async function test(){
+            let host=`http://106.15.202.135:9001`;
+            let user={"name":"admin","password":"123456"};
+            let projectParmas={"type":"项目职责"};
+            let userInfo=await ajax(`${host}/api/user/login`,user);
+            let token=JSON.parse(userInfo).token;
+            let project=await ajax(`${host}/api/dict/getDictByType`,projectParmas,token)
+            console.log(project)
+        }
+        test()
+    </script>
+</body>
+</html>

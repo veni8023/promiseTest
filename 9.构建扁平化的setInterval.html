@@ -1,0 +1,64 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 15:51:44
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 16:17:36
+ * @Description: 实现div先向左运动，再宽度变窄，最后变色
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: rgb(68, 240, 68);
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        function interval(delay, callback) {
+            return new Promise(resolve => {
+                let id = setInterval(() => {
+                    callback(id, resolve)
+                }, delay);
+            })
+        };
+
+        window.onload = function () {
+            let div = document.querySelector('div');
+            interval(100, function (id, resolve) {
+             const left=getComputedStyle(div).left;
+             div.style.left=parseInt(left)+5+'px';
+            if(parseInt(left)>=200){
+                clearInterval(id);
+                resolve(div)
+            }
+            }).then((div) => {
+                return  interval(100,function(id,resolve){
+                    const width=getComputedStyle(div).width;
+                    div.style.width=parseInt(width)-5+'px';
+                    if(parseInt(width)<=20){
+                        clearInterval(id);
+                        resolve(div)
+                    }
+                })
+            }).then((div)=>{
+                    div.style.backgroundColor='red'
+                }
+
+            );
+        }
+
+    </script>
+</body>
+
+</html>

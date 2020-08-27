@@ -1,0 +1,28 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 15:41:31
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 15:45:58
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function timer(delay=1000){
+            return new Promise(resolve=>setTimeout(resolve,delay))
+        }
+        timer(2000).then(
+           value=> {
+                console.log('first')
+                return timer(1000)
+           }
+        ).then(()=>console.log('second'))
+    </script>
+</body>
+</html>

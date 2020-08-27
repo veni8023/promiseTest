@@ -1,0 +1,52 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-29 12:40:42
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-29 13:07:59
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let user=[{name:'admin',password:'123456'},{name:'veni8023',password:'1234556'}]
+        let url='http://106.15.202.135:9001/api/user/login';
+        class User{
+            ajax(parmas){
+                return new Promise((resolve,reject)=>{
+                    let xhr=new XMLHttpRequest;
+                    xhr.open('post',url,true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+                    xhr.send(JSON.stringify(parmas));
+                    xhr.onload=function(){
+                        resolve(this.response);
+                    }
+                    xhr.onerror=function(){
+                        reject('失败')
+                    }
+                })
+            }
+            render(user){
+                user.reduce((promise,item)=>{
+                    return promise.then(()=>{
+                       return this.ajax(item);
+                    }).then(
+                        value=> this.view(value)
+                    )
+                },Promise.resolve())
+            }
+            view(parmas){
+                const h2=document.createElement('h2');
+                h2.innerHTML=JSON.parse(parmas).message;
+                document.body.appendChild(h2)
+            }
+        }
+        new User().render(user);
+    </script>
+</body>
+</html>

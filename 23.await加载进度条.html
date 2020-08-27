@@ -1,0 +1,64 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-29 15:59:49
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-29 16:35:36
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+    <style>
+        #progress {
+            width: 200px;
+            height: 20px;
+            border: 1px solid #ccc;
+        }
+
+        #loading {
+            width: 0;
+            height: 20px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='progress'>
+        <div id="loading"></div>
+    </div>
+    <script>
+        let users = [{ name: 'admin', password: '123456' }, { name: 'veni8023', password: '123456' }, { name: 'veni', password: '123456' }];
+        let url = `http://106.15.202.135:9001/api/user/login`;
+        
+        // async function loading(users) {
+        //     let $loading = document.getElementById('loading');
+
+        //     for (let index = 0; index < users.length; index++) {
+        //         await ajax(url, users[index]);
+        //         $loading.style.width = ((index + 1) / users.length) * 200 + 'px';
+        //         $loading.innerHTML = Math.round(((index + 1) / users.length) * 100) + '%'
+        //     }
+        // }
+        // loading(users);
+
+        //如果只用一次，运用立即执行函数就可以了
+        (async(users) => {
+            let $loading = document.getElementById('loading');
+
+            for (let index = 0; index < users.length; index++) {
+                await ajax(url, users[index]);
+                let progress=Math.round(((index + 1) / users.length) * 100);
+                $loading.style.width = progress*2 + 'px';
+                $loading.innerHTML =progress + '%'
+            }
+        })(users)
+    </script>
+</body>
+
+</html>

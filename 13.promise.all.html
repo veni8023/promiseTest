@@ -1,0 +1,35 @@
+<!--
+ * @Author: veni
+ * @Date: 2020-03-28 17:51:30
+ * @LastEditors: veni
+ * @LastEditTime: 2020-03-28 17:55:44
+ * @Description: 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./public/ajax.js"></script>
+</head>
+<body>
+    <script>
+        window.onload=function(){
+            let config = `http://106.15.202.135:9001`
+            let parmas = [{ "name": "admin", "password": "123456" },{ "name": "veni5", "password": "123456" }]
+            getUsers=function(parmas){
+                let promises=parmas.map(item=>{
+                    return ajax(`${config}/api/user/login`, item)
+                })
+                return Promise.all(promises)
+            }
+            getUsers(parmas).then(value=>{
+                console.log(value)
+            }).catch(
+                err=>{console.log(err)}
+            )
+        }
+    </script>
+</body>
+</html>
